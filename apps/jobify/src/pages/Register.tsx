@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { FormRow } from "@job-search-app/jobify/ui-shared";
+import { FormRow, Alert } from "@job-search-app/jobify/ui-shared";
 
 
 type RegisterFields = {
@@ -15,6 +15,7 @@ export const Register = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isMember, setIsMember] = useState<boolean>(true);
+  const [alert, showAlert] = useState<boolean>(false);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -41,6 +42,7 @@ export const Register = () => {
     <Wrapper className="full-page">
       <form className="form" onSubmit={handleSubmit}>
         <h3>Login</h3>
+        {alert ? <Alert /> : null }
         {/*  Name input */}
         <FormRow type='text' name='name' value={name} handleChange={handleNameChange}/>
         <FormRow type='email' name='email' value={email} handleChange={handleEmailChange}/>
