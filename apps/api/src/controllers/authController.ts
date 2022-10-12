@@ -1,11 +1,11 @@
-const register = (req, res) => {
+import { Response, Request } from 'express';
+
+export const register = (req: Request, res: Response) => {
   res.send('register user');
 };
-const login = (req, res) => {
+export const login = (req: Request, res: Response) => {
   res.send('login');
 };
-const updateUser = (req, res) => {
+export const updateUser = (req: Request, res: Response) => {
   res.send('updateUser');
 };
-
-export { register, login, updateUser };

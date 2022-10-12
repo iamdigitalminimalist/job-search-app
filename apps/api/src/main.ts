@@ -8,6 +8,7 @@ import connectDb from './db/connect';
 
 // routers
 import authRouter from './routes/authRoutes';
+import jobsRouter from './routes/jobsRoutes';
 
 // Middleware
 import notFoundMiddleware from './middleware/not-found';
@@ -24,6 +25,7 @@ app.get('/api', (req: Request, res: Response) => {
 });
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/jobs', jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
