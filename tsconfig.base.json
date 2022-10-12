@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@job-search-app/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@job-search-app/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@job-search-app/jobify/ui-shared": ["libs/jobify/ui-shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
