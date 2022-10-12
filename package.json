@@ -12,6 +12,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "express": "^4.18.1",
+    "mongoose": "^6.6.5",
     "normalize.css": "^8.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -46,6 +47,7 @@
     "babel-jest": "28.1.1",
     "babel-plugin-styled-components": "1.10.7",
     "cypress": "^10.7.0",
+    "dotenv": "^16.0.3",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
