@@ -1,4 +1,5 @@
 import mongoose, { Document } from 'mongoose';
+import validator from 'validator';
 
 export interface IUser extends Document {
   name: string;
@@ -19,6 +20,10 @@ const UserSchema = new mongoose.Schema<IUser>({
   email: {
     type: String,
     required: [true, 'Please provide email'],
+    validate: {
+      validator: validator.isEmail,
+      message: 'Please provide valid email',
+    },
     unique: true,
   },
   password: {
