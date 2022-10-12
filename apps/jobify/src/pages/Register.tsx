@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FormRow, Alert } from "@job-search-app/jobify/ui-shared";
 
-
 type RegisterFields = {
   name: string,
   email: string,
@@ -41,13 +40,23 @@ export const Register = () => {
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={handleSubmit}>
-        <h3>Login</h3>
+        <h3>{isMember ? "Login" : "Register"}</h3>
         {alert ? <Alert /> : null }
         {/*  Name input */}
-        <FormRow type='text' name='name' value={name} handleChange={handleNameChange}/>
+        {!isMember ? (<FormRow type='text' name='name' value={name} handleChange={handleNameChange} />) : null}
         <FormRow type='email' name='email' value={email} handleChange={handleEmailChange}/>
         <FormRow type='password' name='password' value={password} handleChange={handlePasswordChange}/>
         <button type="submit" className="btn btn-block">submit</button>
+        <p>
+          {isMember ? 'Not a member yet?' : 'Already a member?'}
+          <button
+            type='button'
+            onClick={toggleMember}
+            className='member-btn'
+          >
+            {isMember ? 'Register' : 'Login'}
+          </button>
+        </p>
       </form>
     </Wrapper>
   );
