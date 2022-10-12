@@ -1,5 +1,6 @@
 {
   "name": "job-search-app",
+  "author": "Or Druker <hello@druker.net> (https://druker.net/)",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
