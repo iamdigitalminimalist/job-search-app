@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 
 // Middleware
 import notFoundMiddleware from './middleware/not-found';
+import errorHandlerMiddleware from './middleware/error-handler';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.get('/api', (req: Request, res: Response) => {
 });
 
 app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.port || 3333;
 const server = app.listen(port, () => {
