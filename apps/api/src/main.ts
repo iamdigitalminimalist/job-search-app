@@ -3,19 +3,27 @@ import { Message } from '@job-search-app/api-interfaces';
 import { Request, Response } from 'express';
 import * as dotenv from 'dotenv';
 
+// db and authenticated User
+import connectDb from './db/connect';
+
+// routers
+import authRouter from './routes/authRoutes';
+
 // Middleware
 import notFoundMiddleware from './middleware/not-found';
 import errorHandlerMiddleware from './middleware/error-handler';
-import connectDb from './db/connect';
 
 dotenv.config();
 const app = express();
+app.use(express.json());
 
 const greeting: Message = { message: 'Welcome to api!' };
 
 app.get('/api', (req: Request, res: Response) => {
   res.send(greeting);
 });
+
+app.use('/api/v1/auth', authRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
