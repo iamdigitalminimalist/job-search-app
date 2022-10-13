@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FormRow, Alert } from '@job-search-app/jobify/ui-shared';
-import { IUser, useAppContext } from '../context/appContext';
-import { updateUser } from '../../../api/src/controllers/authController';
+import { useAppContext } from '../context/appContext';
 
 type RegisterFields = {
   name: string;
@@ -48,7 +47,9 @@ export const Register = () => {
     if (isMember) {
       console.log('already a member');
     } else {
-      updateUser(currentUser);
+      if (registerUser) {
+        registerUser(currentUser);
+      }
     }
   };
 
