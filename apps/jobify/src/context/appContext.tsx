@@ -17,6 +17,12 @@ export interface IUser {
   lastName?: string;
 }
 
+export interface ILocalStorage {
+  user: IUser;
+  token: string;
+  location: string;
+}
+
 export interface AppContextInterface {
   isLoading: boolean;
   showAlert: boolean;
@@ -34,15 +40,19 @@ export interface AppContextInterface {
   }) => object;
 }
 
+const token = localStorage.getItem('token');
+const user = localStorage.getItem('user');
+const userLocation = localStorage.getItem('location');
+
 const initialState: AppContextInterface = {
   isLoading: false,
   showAlert: false,
   alertText: '',
   alertType: '',
-  user: null,
-  token: null,
-  userLocation: '',
-  jobLocation: '',
+  user: user ? JSON.parse(user) : null,
+  token: token,
+  userLocation: userLocation || '',
+  jobLocation: userLocation || '',
 };
 
 const AppContext = React.createContext<AppContextInterface | undefined>(
@@ -65,6 +75,18 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }, 3000);
   };
 
+  const addUserToLocalStorage = (props: ILocalStorage) => {
+    localStorage.setItem('user', JSON.stringify(props.user));
+    localStorage.setItem('token', JSON.stringify(props.token));
+    localStorage.setItem('location', JSON.stringify(props.location));
+  };
+
+  const removeUserFromLocalStorage = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('location');
+  };
+
   const registerUser = async (currentUser: IUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
@@ -75,6 +97,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         type: REGISTER_USER_SUCCESS,
         payload: { user, token, location },
       });
+      addUserToLocalStorage({ user, token, location });
     } catch (error: any) {
       // console.error(error.response);
       dispatch({
