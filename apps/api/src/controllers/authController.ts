@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import User from '../model/UserSchema';
+import User from '../model/User';
 import { BadRequestError } from '../errors';
 
 export const register = async (req: Request, res: Response) => {

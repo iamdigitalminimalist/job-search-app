@@ -1,5 +1,6 @@
 import mongoose, { Document } from 'mongoose';
 import validator from 'validator';
+import * as bcrypt from 'bcryptjs';
 
 export interface IUser extends Document {
   name: string;
@@ -44,6 +45,14 @@ const UserSchema = new mongoose.Schema<IUser>({
     maxLength: 20,
     default: 'my city',
   },
+});
+
+UserSchema.pre('save', async function () {
+  if (!this.isModified('password')) return;
+  const salt = await bcrypt.genSalt(10);
+  if (this.password !== undefined) {
+    this.password = await bcrypt.hash(this.password, salt);
+  }
 });
 
 export default mongoose.model('User', UserSchema);
