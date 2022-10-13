@@ -16,7 +16,14 @@ export const Register = () => {
   const [password, setPassword] = useState<string>('');
   const [isMember, setIsMember] = useState<boolean>(true);
 
-  const { isLoading, showAlert, displayAlert, registerUser } = useAppContext();
+  const {
+    isLoading,
+    showAlert,
+    displayAlert,
+    registerUser,
+    alertType,
+    alertText,
+  } = useAppContext();
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -57,7 +64,9 @@ export const Register = () => {
     <Wrapper className="full-page">
       <form className="form" onSubmit={handleSubmit}>
         <h3>{isMember ? 'Login' : 'Register'}</h3>
-        {showAlert ? <Alert /> : null}
+        {showAlert ? (
+          <Alert alertText={alertText} alertType={alertType} />
+        ) : null}
         {/*  Name input */}
         {!isMember ? (
           <FormRow

@@ -1,13 +1,10 @@
-/* eslint-disable-next-line */
-import {
-  useAppContext
-} from "../../../../../../apps/jobify/src/context/appContext";
-
-// export interface AlertProps {}
-
-export const Alert = () => {
-  const {alertType, alertText} = useAppContext()
-  return (
-    <div className={`alert alert-${alertType}`}>{alertText}</div>
-  )
+export interface AlertProps {
+  alertType: string;
+  alertText: string;
 }
+
+export const Alert = (props: AlertProps) => {
+  return (
+    <div className={`alert alert-${props.alertType}`}>{props.alertText}</div>
+  );
+};
