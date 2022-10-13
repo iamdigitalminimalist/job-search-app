@@ -37,13 +37,14 @@ export const login = async (req: Request, res: Response) => {
   if (!user) {
     throw new UnauthenticatedError('Invalid Credentials');
   }
-  console.log(user);
+  // console.log(user);
   const isPassword = await user.comparePassword(password);
   if (!isPassword) {
     throw new UnauthenticatedError('Invalid Credentials');
   }
-
-  res.send('login');
+  const token = user.createJWT();
+  user.password = undefined; // Remove password field from the user object
+  res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
 export const updateUser = (req: Request, res: Response) => {
