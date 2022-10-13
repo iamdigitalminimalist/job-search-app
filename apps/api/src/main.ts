@@ -1,7 +1,7 @@
 import * as express from 'express';
-import { Message } from '@job-search-app/api-interfaces';
 import { Request, Response } from 'express';
 import * as dotenv from 'dotenv';
+import 'express-async-errors';
 
 // db and authenticated User
 import connectDb from './db/connect';
@@ -13,6 +13,9 @@ import jobsRouter from './routes/jobsRoutes';
 // Middleware
 import notFoundMiddleware from './middleware/not-found';
 import errorHandlerMiddleware from './middleware/error-handler';
+
+// Types
+import { Message } from '@job-search-app/api-interfaces';
 
 dotenv.config();
 const app = express();
