@@ -8,7 +8,14 @@ const errorHandlerMiddleware: ErrorRequestHandler = (err, req, res, next) => {
     msg: 'Something went wrong, try again later',
   };
 
-  res.status(defaultError.statusCode).json({ msg: err });
+  if (err.name === 'ValidationError') {
+    defaultError.statusCode = StatusCodes.BAD_REQUEST;
+    defaultError.msg = Object.values(err.errors)
+      .map((item: any) => item.message)
+      .join(',');
+  }
+
+  res.status(defaultError.statusCode).json({ msg: defaultError.msg });
 };
 
 export default errorHandlerMiddleware;
