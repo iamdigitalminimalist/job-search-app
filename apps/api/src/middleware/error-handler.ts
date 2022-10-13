@@ -1,11 +1,17 @@
 import { ErrorRequestHandler } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { Request, Response, NextFunction } from 'express';
 
-const errorHandlerMiddleware: ErrorRequestHandler = (err, req, res, next) => {
+const errorHandlerMiddleware: ErrorRequestHandler = (
+  err,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.error(err);
 
   const defaultError = {
-    statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+    statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || 'Something went wrong, try again later',
   };
 

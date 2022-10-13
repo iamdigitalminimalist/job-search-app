@@ -2,10 +2,18 @@ import { Response, Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import User from '../model/UserSchema';
 
+class CustomAPIError extends Error {
+  private statusCode: StatusCodes;
+  constructor(message) {
+    super(message);
+    this.statusCode = StatusCodes.BAD_REQUEST;
+  }
+}
+
 export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
-    throw new Error('Please provide all values');
+    throw new CustomAPIError('Please provide all values');
   }
 
   const user = await User.create({ name, email, password });
