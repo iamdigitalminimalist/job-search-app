@@ -10,6 +10,7 @@ export interface IUser extends Document {
   lastName?: string;
   location?: string;
   createJWT?: () => object;
+  // comparePassword?: (candidatePassword: string) => void;
 }
 
 const UserSchema = new mongoose.Schema<IUser>({

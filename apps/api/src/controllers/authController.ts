@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import User from '../model/User';
-import { BadRequestError } from '../errors';
+import { BadRequestError, UnauthenticatedError } from '../errors';
 
 export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -28,7 +28,21 @@ export const register = async (req: Request, res: Response) => {
   });
 };
 
-export const login = (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new BadRequestError('Please provide all values');
+  }
+  const user = await User.findOne({ email }).select('+password');
+  if (!user) {
+    throw new UnauthenticatedError('Invalid Credentials');
+  }
+  console.log(user);
+  const isPassword = await user.comparePassword(password);
+  if (!isPassword) {
+    throw new UnauthenticatedError('Invalid Credentials');
+  }
+
   res.send('login');
 };
 
