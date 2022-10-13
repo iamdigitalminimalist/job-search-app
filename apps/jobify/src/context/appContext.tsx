@@ -6,6 +6,9 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
 } from './actions';
 import axios from 'axios';
 
@@ -38,6 +41,7 @@ export interface AppContextInterface {
     name: string;
     email: string;
   }) => object;
+  loginUser?: (currentUser: { password: string; email: string }) => void;
 }
 
 const token = localStorage.getItem('token');
@@ -107,8 +111,14 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   };
 
+  const loginUser = async (currentUser: IUser) => {
+    console.log(currentUser);
+  };
+
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser }}>
+    <AppContext.Provider
+      value={{ ...state, displayAlert, registerUser, loginUser }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -25,6 +25,7 @@ export const Register = () => {
     showAlert,
     displayAlert,
     registerUser,
+    loginUser,
     alertType,
     alertText,
   } = useAppContext();
@@ -64,7 +65,9 @@ export const Register = () => {
     const currentUser = { name, email, password };
 
     if (isMember) {
-      console.log('already a member');
+      if (loginUser) {
+        loginUser(currentUser);
+      }
     } else {
       if (registerUser) {
         registerUser(currentUser);
