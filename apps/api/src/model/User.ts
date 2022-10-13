@@ -1,6 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 import validator from 'validator';
 import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 
 export interface IUser extends Document {
   name: string;
@@ -8,7 +9,7 @@ export interface IUser extends Document {
   password: string | undefined;
   lastName?: string;
   location?: string;
-  createJWT?: () => void;
+  createJWT?: () => object;
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
@@ -57,7 +58,9 @@ UserSchema.pre('save', async function () {
 });
 
 UserSchema.methods.createJWT = function () {
-  console.log(this);
+  return jwt.sign({ userId: this._id }, process.env.JWT_SECRET as string, {
+    expiresIn: process.env.JWT_LIFETIME,
+  });
 };
 
 export default mongoose.model('User', UserSchema);
