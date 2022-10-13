@@ -26,7 +26,11 @@ export interface AppContextInterface {
   userLocation: string;
   jobLocation: string;
   displayAlert?: () => void;
-  registerUser?: () => object;
+  registerUser?: (currentUser: {
+    password: string;
+    name: string;
+    email: string;
+  }) => object;
 }
 
 const initialState: AppContextInterface = {
