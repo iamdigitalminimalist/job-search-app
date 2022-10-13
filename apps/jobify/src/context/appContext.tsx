@@ -4,6 +4,7 @@ import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
   REGISTER_USER_BEGIN,
+  REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
 } from './actions';
 import axios from 'axios';
@@ -68,14 +69,18 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       const response = await axios.post('/api/v1/auth/register', currentUser);
-      console.log(response);
+      // console.log(response);
       const { user, token, location } = response.data;
       dispatch({
         type: REGISTER_USER_SUCCESS,
         payload: { user, token, location },
       });
     } catch (error: any) {
-      console.error(error.response);
+      // console.error(error.response);
+      dispatch({
+        type: REGISTER_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
   };
 

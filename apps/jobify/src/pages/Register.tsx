@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FormRow, Alert } from '@job-search-app/jobify/ui-shared';
 import { useAppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 
 type RegisterFields = {
   name: string;
@@ -11,12 +12,15 @@ type RegisterFields = {
 };
 
 export const Register = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isMember, setIsMember] = useState<boolean>(true);
 
   const {
+    user,
     isLoading,
     showAlert,
     displayAlert,
@@ -24,6 +28,14 @@ export const Register = () => {
     alertType,
     alertText,
   } = useAppContext();
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
