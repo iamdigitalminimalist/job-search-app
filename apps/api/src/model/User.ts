@@ -57,10 +57,14 @@ UserSchema.pre('save', async function () {
   }
 });
 
-UserSchema.methods.createJWT = function () {
-  return jwt.sign({ userId: this._id }, process.env.JWT_SECRET as string, {
-    expiresIn: process.env.JWT_LIFETIME,
-  });
+UserSchema.methods['createJWT'] = function () {
+  return jwt.sign(
+    { userId: this['_id'] },
+    process.env['JWT_SECRET'] as string,
+    {
+      expiresIn: process.env['JWT_LIFETIME'],
+    }
+  );
 };
 
 export default mongoose.model('User', UserSchema);
