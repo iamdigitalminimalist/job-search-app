@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Request, Response } from 'express';
 import * as dotenv from 'dotenv';
 import 'express-async-errors';
+import * as morgan from 'morgan';
 
 // db and authenticated User
 import connectDb from './db/connect';
@@ -20,6 +21,10 @@ import { Message } from '@job-search-app/api-interfaces';
 dotenv.config();
 const app = express();
 app.use(express.json());
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'));
+}
 
 const greeting: Message = { message: 'Welcome to api!' };
 
