@@ -3,12 +3,19 @@ import { StatusCodes } from 'http-status-codes';
 import User from '../model/UserSchema';
 
 export const register = async (req: Request, res: Response) => {
-  const user = await User.create(req.body);
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    throw new Error('Please provide all values');
+  }
+
+  const user = await User.create({ name, email, password });
   res.status(StatusCodes.CREATED).json({ user });
 };
+
 export const login = (req: Request, res: Response) => {
   res.send('login');
 };
+
 export const updateUser = (req: Request, res: Response) => {
   res.send('updateUser');
 };
