@@ -1,8 +1,7 @@
 import React from 'react';
-import { IoBarChartSharp } from 'react-icons/io5';
 import { MdQueryStats } from 'react-icons/md';
 import { FaWpforms } from 'react-icons/fa';
-import { ImProfile } from 'react-icons/im';
+import { ImProfile, ImStatsBars } from 'react-icons/im';
 
 export type LinkProps = {
   id: number;
@@ -16,7 +15,7 @@ export const links: LinkProps[] = [
     id: 1,
     text: 'stats',
     path: '/',
-    icon: IoBarChartSharp,
+    icon: ImStatsBars,
   },
   {
     id: 2,
