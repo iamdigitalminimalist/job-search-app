@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import { Logo } from '../logo/logo';
@@ -9,6 +10,7 @@ export interface NavbarProps {
 }
 
 export const Navbar = (props: NavbarProps) => {
+  const [showLogout, setShowLogout] = useState(false);
   return (
     <Wrapper>
       <div className="nav-center">
@@ -27,13 +29,13 @@ export const Navbar = (props: NavbarProps) => {
           <button
             type="button"
             className="btn"
-            onClick={() => console.log('show/hide dropdown')}
+            onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
             Or
             <FaCaretDown />
           </button>
-          <div className="dropdown show-dropdown">
+          <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
             <button
               type="button"
               className="dropdown-btn"
