@@ -1,12 +1,38 @@
 import styled from 'styled-components';
+import { FaTimes } from 'react-icons/all';
+import { Logo } from '../logo/logo';
+import { MouseEventHandler } from 'react';
 
 /* eslint-disable-next-line */
-export interface SmallSidebarProps {}
+export interface SmallSidebarProps {
+  showSidebar: boolean;
+  toggleSidebar: MouseEventHandler<HTMLButtonElement> | undefined;
+}
 
 export const SmallSidebar = (props: SmallSidebarProps) => {
   return (
     <Wrapper>
-      <h4>Small Sidebar</h4>
+      <div
+        className={
+          props.showSidebar
+            ? 'sidebar-container show-sidebar'
+            : 'sidebar-container'
+        }
+      >
+        <div className="content">
+          <button
+            type="button"
+            className="close-btn"
+            onClick={props.toggleSidebar}
+          >
+            <FaTimes />
+          </button>
+          <header>
+            <Logo />
+          </header>
+          <div className="nav-links"></div>
+        </div>
+      </div>
     </Wrapper>
   );
 };
