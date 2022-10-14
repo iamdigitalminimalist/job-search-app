@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, MouseEventHandler } from 'react';
 import { reducer } from './reducer';
 import {
   CLEAR_ALERT,
@@ -9,6 +9,7 @@ import {
   LOGIN_USER_BEGIN,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
+  TOGGLE_SIDEBAR,
 } from './actions';
 import axios from 'axios';
 
@@ -35,6 +36,7 @@ export interface AppContextInterface {
   token: string | null;
   userLocation: string;
   jobLocation: string;
+  showSidebar: boolean;
   displayAlert?: () => void;
   registerUser?: (currentUser: {
     password: string;
@@ -42,6 +44,7 @@ export interface AppContextInterface {
     email: string;
   }) => object;
   loginUser?: (currentUser: { password: string; email: string }) => void;
+  toggleSidebar?: MouseEventHandler;
 }
 
 const token = localStorage.getItem('token');
@@ -57,6 +60,7 @@ const initialState: AppContextInterface = {
   token: token,
   userLocation: userLocation || '',
   jobLocation: userLocation || '',
+  showSidebar: false,
 };
 
 const AppContext = React.createContext<AppContextInterface | undefined>(
@@ -132,9 +136,13 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     clearAlert();
   };
 
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
+
   return (
     <AppContext.Provider
-      value={{ ...state, displayAlert, registerUser, loginUser }}
+      value={{ ...state, displayAlert, registerUser, loginUser, toggleSidebar }}
     >
       {children}
     </AppContext.Provider>

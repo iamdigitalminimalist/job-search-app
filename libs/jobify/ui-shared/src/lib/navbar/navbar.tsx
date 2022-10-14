@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import { Logo } from '../logo/logo';
+import { MouseEventHandler } from 'react';
 
 /* eslint-disable-next-line */
-export interface NavbarProps {}
+export interface NavbarProps {
+  toggleSidebar: MouseEventHandler | undefined;
+}
 
 export const Navbar = (props: NavbarProps) => {
   return (
@@ -12,7 +15,7 @@ export const Navbar = (props: NavbarProps) => {
         <button
           type="button"
           className="toggle-btn"
-          onClick={() => console.log('toggle sidebar')}
+          onClick={props.toggleSidebar}
         >
           <FaAlignLeft />
         </button>

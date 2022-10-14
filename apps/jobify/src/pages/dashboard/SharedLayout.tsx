@@ -8,13 +8,14 @@ import {
 import { useAppContext } from '../../context/appContext';
 
 export const SharedLayout = () => {
+  const { toggleSidebar } = useAppContext();
   return (
     <Wrapper>
       <main className="dashboard">
         <BigSidebar />
         <SmallSidebar />
         <div>
-          <Navbar />
+          <Navbar toggleSidebar={toggleSidebar} />
           <div className="dashboard-page">
             <Outlet />
           </div>
