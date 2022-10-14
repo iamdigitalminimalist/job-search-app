@@ -4,9 +4,19 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import { Logo } from '../logo/logo';
 import { MouseEventHandler } from 'react';
 
+export interface IUser {
+  name: string;
+  password: string;
+  email: string;
+  location?: string;
+  lastName?: string;
+}
+
 /* eslint-disable-next-line */
 export interface NavbarProps {
-  toggleSidebar: MouseEventHandler | undefined;
+  toggleSidebar: MouseEventHandler<HTMLButtonElement> | undefined;
+  logoutUser: MouseEventHandler<HTMLButtonElement> | undefined;
+  user: IUser | null;
 }
 
 export const Navbar = (props: NavbarProps) => {
@@ -32,14 +42,14 @@ export const Navbar = (props: NavbarProps) => {
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
-            Or
+            {props.user?.name}
             <FaCaretDown />
           </button>
           <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
             <button
               type="button"
               className="dropdown-btn"
-              onClick={() => console.log('logout user')}
+              onClick={props.logoutUser}
             >
               Logout
             </button>
