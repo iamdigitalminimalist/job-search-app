@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Message } from '@job-search-app/api-interfaces';
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  createRoutesFromElements,
-} from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { Layout } from '@job-search-app/jobify/ui-shared';
-import { PageNotFound, Register, Dashboard, Landing } from '../pages';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route index element={<Dashboard />} />
-      <Route path="/landing" element={<Landing />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Route>
-  )
-);
+import { PageNotFound, Register, Landing, ProtectedRoute } from '../pages';
+import {
+  AddJob,
+  AllJobs,
+  Profile,
+  SharedLayout,
+  Stats,
+} from '../pages/dashboard';
 
 export const App = () => {
   const [m, setMessage] = useState<Message>({ message: '' });
@@ -30,13 +21,28 @@ export const App = () => {
   }, []);
 
   return (
-    <>
-      <RouterProvider router={router} />
-      {/*<div>*/}
-      {/* <Landing />*/}
-      {/*</div>*/}
-      {/*<div>{m.message}</div>*/}
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <SharedLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Stats />} />
+          <Route path="add-job" element={<AddJob />} />
+          <Route path="all-jobs" element={<AllJobs />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+        <Route element={<Layout />}>
+          <Route path="/register" element={<Register />} />
+          <Route path="/landing" element={<Landing />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 

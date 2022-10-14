@@ -1,6 +1,6 @@
-import { Dashboard } from "./Dashboard";
-import { Landing} from "./Landing";
-import { PageNotFound} from "./404";
-import { Register} from "./Register";
+import { Landing } from './Landing';
+import { PageNotFound } from './404';
+import { Register } from './Register';
+import { ProtectedRoute } from './ProtectedRoute';
 
-export { Dashboard, Landing, PageNotFound, Register}
+export { Landing, PageNotFound, Register, ProtectedRoute };
