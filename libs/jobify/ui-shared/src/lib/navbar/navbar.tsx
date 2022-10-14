@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
+import { Logo } from '../logo/logo';
 
 /* eslint-disable-next-line */
 export interface NavbarProps {}
@@ -6,7 +8,39 @@ export interface NavbarProps {}
 export const Navbar = (props: NavbarProps) => {
   return (
     <Wrapper>
-      <h4>Navbar</h4>
+      <div className="nav-center">
+        <button
+          type="button"
+          className="toggle-btn"
+          onClick={() => console.log('toggle sidebar')}
+        >
+          <FaAlignLeft />
+        </button>
+        <div>
+          <Logo />
+          <h3 className="logo-text">Dashboard</h3>
+        </div>
+        <div className="btn-container">
+          <button
+            type="button"
+            className="btn"
+            onClick={() => console.log('show/hide dropdown')}
+          >
+            <FaUserCircle />
+            Or
+            <FaCaretDown />
+          </button>
+          <div className="dropdown show-dropdown">
+            <button
+              type="button"
+              className="dropdown-btn"
+              onClick={() => console.log('logout user')}
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
     </Wrapper>
   );
 };

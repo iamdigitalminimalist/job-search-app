@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import {
   BigSidebar,
   Navbar,
   SmallSidebar,
 } from '@job-search-app/jobify/ui-shared';
+import { useAppContext } from '../../context/appContext';
 
 export const SharedLayout = () => {
   return (
