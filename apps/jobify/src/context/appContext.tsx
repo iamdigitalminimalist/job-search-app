@@ -109,9 +109,9 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       return response;
     },
     (error: AxiosError) => {
-      console.log(error.response);
+      // console.log(error.response);
       if (error.response?.status === 401) {
-        console.error('AUTH ERROR');
+        logoutUser();
       }
       return Promise.reject(error);
     }
@@ -196,10 +196,12 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       addUserToLocalStorage({ user, location, token });
     } catch (error: any) {
       // console.error(error);
-      dispatch({
-        type: UPDATE_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+      if (error.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: error.response.data.msg },
+        });
+      }
     }
   };
 
