@@ -29,6 +29,19 @@ export interface ILocalStorage {
   location: string;
 }
 
+enum JobTypeOptions {
+  'FULL_TIME' = 'full-time',
+  'PART_TIME' = 'part-time',
+  'REMOTE' = 'remote',
+  'INTERNSHIP' = 'internship',
+}
+
+enum StatusTypeOptions {
+  'INTERVIEW' = 'interview',
+  'DECLINED' = 'declined',
+  'PENDING' = 'pending',
+}
+
 export interface AppContextInterface {
   isLoading: boolean;
   showAlert: boolean;
@@ -39,6 +52,14 @@ export interface AppContextInterface {
   userLocation: string;
   jobLocation: string;
   showSidebar: boolean;
+  isEditing: boolean;
+  editJobId: string;
+  position: string;
+  company: string;
+  jobTypeOptions: JobTypeOptions[];
+  jobType: string;
+  statusTypeOptions: StatusTypeOptions[];
+  statusType: string;
   displayAlert?: () => void;
   registerUser?: (currentUser: {
     password: string;
@@ -68,7 +89,24 @@ const initialState: AppContextInterface = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || '',
+  isEditing: false,
+  editJobId: '',
+  position: '',
+  company: '',
   jobLocation: userLocation || '',
+  jobTypeOptions: [
+    JobTypeOptions.INTERNSHIP,
+    JobTypeOptions.PART_TIME,
+    JobTypeOptions.REMOTE,
+    JobTypeOptions.FULL_TIME,
+  ],
+  jobType: JobTypeOptions.FULL_TIME,
+  statusTypeOptions: [
+    StatusTypeOptions.DECLINED,
+    StatusTypeOptions.INTERVIEW,
+    StatusTypeOptions.PENDING,
+  ],
+  statusType: StatusTypeOptions.PENDING,
   showSidebar: false,
 };
 
