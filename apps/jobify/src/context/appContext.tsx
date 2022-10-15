@@ -36,7 +36,7 @@ enum JobTypeOptions {
   'INTERNSHIP' = 'internship',
 }
 
-enum StatusTypeOptions {
+enum JobStatusOptions {
   'INTERVIEW' = 'interview',
   'DECLINED' = 'declined',
   'PENDING' = 'pending',
@@ -58,8 +58,8 @@ export interface AppContextInterface {
   company: string;
   jobTypeOptions: JobTypeOptions[];
   jobType: string;
-  statusTypeOptions: StatusTypeOptions[];
-  statusType: string;
+  jobStatusOptions: JobStatusOptions[];
+  jobStatus: string;
   displayAlert?: () => void;
   registerUser?: (currentUser: {
     password: string;
@@ -101,12 +101,12 @@ const initialState: AppContextInterface = {
     JobTypeOptions.FULL_TIME,
   ],
   jobType: JobTypeOptions.FULL_TIME,
-  statusTypeOptions: [
-    StatusTypeOptions.DECLINED,
-    StatusTypeOptions.INTERVIEW,
-    StatusTypeOptions.PENDING,
+  jobStatusOptions: [
+    JobStatusOptions.DECLINED,
+    JobStatusOptions.INTERVIEW,
+    JobStatusOptions.PENDING,
   ],
-  statusType: StatusTypeOptions.PENDING,
+  jobStatus: JobStatusOptions.PENDING,
   showSidebar: false,
 };
 

@@ -11,8 +11,9 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET as string);
     // console.log(payload);
-    if (typeof payload === 'string')
+    if (typeof payload === 'string') {
       throw new BadRequestError('invalid jwt token');
+    }
     req.user = { userId: payload.userId };
     next();
   } catch (error) {
