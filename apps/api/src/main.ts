@@ -14,6 +14,7 @@ import jobsRouter from './routes/jobsRoutes';
 // Middleware
 import notFoundMiddleware from './middleware/not-found';
 import errorHandlerMiddleware from './middleware/error-handler';
+import authenticateUser from './middleware/auth';
 
 // Types
 import { Message } from '@job-search-app/api-interfaces';
@@ -33,7 +34,7 @@ app.get('/api', (req: Request, res: Response) => {
 });
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs', jobsRouter);
+app.use('/api/v1/jobs', authenticateUser, jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
