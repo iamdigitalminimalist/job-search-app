@@ -140,7 +140,20 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   const updateUser = async (currentUser: IUser) => {
-    console.log(currentUser);
+    try {
+      const { data } = await axios.patch(
+        '/api/v1/auth/updateUser',
+        currentUser,
+        {
+          headers: {
+            Authorization: `Bearer ${state.token}`,
+          },
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const toggleSidebar = () => {
