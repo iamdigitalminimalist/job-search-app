@@ -9,6 +9,9 @@ import {
   LOGIN_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from './actions';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
@@ -45,7 +48,12 @@ export interface AppContextInterface {
   loginUser?: (currentUser: { password: string; email: string }) => void;
   toggleSidebar?: MouseEventHandler<HTMLButtonElement> | undefined;
   logoutUser?: MouseEventHandler<HTMLButtonElement> | undefined;
-  updateUser?: () => void;
+  updateUser?: (p: {
+    lastName: string;
+    name: string;
+    location: string;
+    email: string;
+  }) => void;
 }
 
 const token = localStorage.getItem('token');
@@ -176,11 +184,22 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   const updateUser = async (currentUser: IUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
     try {
       const { data } = await authFetch.patch('/auth/updateUser', currentUser);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+      // console.log(data);
+      const { user, location, token } = data;
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { user, location, token },
+      });
+      addUserToLocalStorage({ user, location, token });
+    } catch (error: any) {
+      // console.error(error);
+      dispatch({
+        type: UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
   };
 

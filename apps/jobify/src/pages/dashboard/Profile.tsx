@@ -4,8 +4,15 @@ import { useAppContext } from '../../context/appContext';
 import styled from 'styled-components';
 
 export const Profile = () => {
-  const { user, showAlert, displayAlert, updateUser, isLoading } =
-    useAppContext();
+  const {
+    user,
+    showAlert,
+    displayAlert,
+    updateUser,
+    isLoading,
+    alertType,
+    alertText,
+  } = useAppContext();
   const [name, setName] = useState<string | undefined>(user?.name);
   const [email, setEmail] = useState<string | undefined>(user?.email);
   const [lastName, setLastName] = useState<string | undefined>(user?.lastName);
@@ -14,18 +21,23 @@ export const Profile = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name || !email || !lastName || !location) {
-      displayAlert?.();
+      if (displayAlert) {
+        displayAlert();
+      }
       return;
     }
-    // @ts-ignore
-    updateUser({ name, email, lastName, location });
+    if (updateUser) {
+      updateUser({ name, email, lastName, location });
+    }
   };
 
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <h3>Profile</h3>
-        {showAlert ? <Alert alertType="success" alertText="test" /> : null}
+        {showAlert ? (
+          <Alert alertType={alertType} alertText={alertText} />
+        ) : null}
         <div className="form-center">
           <FormRow
             type="text"

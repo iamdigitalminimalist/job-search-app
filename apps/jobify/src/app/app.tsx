@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Message } from '@job-search-app/api-interfaces';
+import React from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { Layout } from '@job-search-app/jobify/ui-shared';
 import { PageNotFound, Register, Landing, ProtectedRoute } from '../pages';
@@ -12,14 +11,6 @@ import {
 } from '../pages/dashboard';
 
 export const App = () => {
-  const [m, setMessage] = useState<Message>({ message: '' });
-
-  useEffect(() => {
-    fetch('/api')
-      .then((r) => r.json())
-      .then(setMessage);
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
