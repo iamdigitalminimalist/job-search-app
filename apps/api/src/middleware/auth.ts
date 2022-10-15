@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
+import { UnauthenticatedError } from '../errors';
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {
-  const header = req.headers;
   const authHeader = req.headers.authorization;
-  console.log(header);
-  console.log(authHeader);
-  console.log('authenticate user');
+  if (!authHeader) {
+    throw new UnauthenticatedError('Authentication Invalid');
+  }
   next();
 };
 
