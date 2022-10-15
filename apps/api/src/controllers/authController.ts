@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import User from '../model/User';
-import { BadRequestError, UnauthenticatedError } from '../errors';
+import { BadRequestError, UnAuthenticatedError } from '../errors';
 
 const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -35,12 +35,12 @@ const login = async (req: Request, res: Response) => {
   }
   const user = await User.findOne({ email }).select('+password');
   if (!user) {
-    throw new UnauthenticatedError('Invalid Credentials');
+    throw new UnAuthenticatedError('Invalid Credentials');
   }
   // console.log(user);
   const isPassword = await user.comparePassword(password);
   if (!isPassword) {
-    throw new UnauthenticatedError('Invalid Credentials');
+    throw new UnAuthenticatedError('Invalid Credentials');
   }
   const token = user.createJWT();
   user.password = undefined; // Remove password field from the user object
