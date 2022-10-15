@@ -1,3 +1,4 @@
+export * from './lib/nav-links/nav-links';
 export * from './lib/big-sidebar/big-sidebar';
 export * from './lib/small-sidebar/small-sidebar';
 export * from './lib/navbar/navbar';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdQueryStats } from 'react-icons/md';
-import { FaWpforms } from 'react-icons/fa';
-import { ImProfile, ImStatsBars } from 'react-icons/im';
+import { FaWpforms, FaChartLine } from 'react-icons/fa';
+import { ImProfile } from 'react-icons/im';
 
 export type LinkProps = {
   id: number;
@@ -15,7 +15,7 @@ export const links: LinkProps[] = [
     id: 1,
     text: 'stats',
     path: '/',
-    icon: ImStatsBars,
+    icon: FaChartLine,
   },
   {
     id: 2,
