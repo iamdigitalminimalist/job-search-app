@@ -47,6 +47,7 @@ export interface AppContextInterface {
   loginUser?: (currentUser: { password: string; email: string }) => void;
   toggleSidebar?: MouseEventHandler<HTMLButtonElement> | undefined;
   logoutUser?: MouseEventHandler<HTMLButtonElement> | undefined;
+  updateUser?: () => void;
 }
 
 const token = localStorage.getItem('token');
@@ -138,6 +139,10 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     clearAlert();
   };
 
+  const updateUser = async (currentUser: IUser) => {
+    console.log(currentUser);
+  };
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -156,6 +161,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         loginUser,
         toggleSidebar,
         logoutUser,
+        updateUser,
       }}
     >
       {children}
