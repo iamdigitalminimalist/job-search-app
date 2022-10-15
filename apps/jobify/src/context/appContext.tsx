@@ -153,12 +153,17 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         payload: { user, token, location },
       });
       addUserToLocalStorage({ user, token, location });
-    } catch (error: any) {
-      // console.error(error.response);
-      dispatch({
-        type: REGISTER_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response !== undefined) {
+          dispatch({
+            type: REGISTER_USER_ERROR,
+            payload: { msg: error.response.data.msg },
+          });
+        }
+      } else {
+        console.error(error);
+      }
     }
     clearAlert();
   };
@@ -174,11 +179,17 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         payload: { user, token, location },
       });
       addUserToLocalStorage({ user, token, location });
-    } catch (error: any) {
-      dispatch({
-        type: LOGIN_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response !== undefined) {
+          dispatch({
+            type: LOGIN_USER_ERROR,
+            payload: { msg: error.response.data.msg },
+          });
+        }
+      } else {
+        console.error(error);
+      }
     }
     clearAlert();
   };
@@ -194,15 +205,21 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         payload: { user, location, token },
       });
       addUserToLocalStorage({ user, location, token });
-    } catch (error: any) {
-      // console.error(error);
-      if (error.response.status !== 401) {
-        dispatch({
-          type: UPDATE_USER_ERROR,
-          payload: { msg: error.response.data.msg },
-        });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response !== undefined) {
+          if (error.response.status !== 401) {
+            dispatch({
+              type: UPDATE_USER_ERROR,
+              payload: { msg: error.response.data.msg },
+            });
+          }
+        }
+      } else {
+        console.error(error);
       }
     }
+    clearAlert();
   };
 
   const toggleSidebar = () => {
