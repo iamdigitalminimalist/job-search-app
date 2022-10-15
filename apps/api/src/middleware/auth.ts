@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { UnauthenticatedError } from '../errors';
+import { BadRequestError, UnauthenticatedError } from '../errors';
 import * as jwt from 'jsonwebtoken';
 
 const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -9,11 +9,10 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
   }
   const token = authHeader.split(' ')[1];
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET as string);
-    console.log(payload);
-    if (typeof payload === 'string') {
-      throw new Error('invalid jwt token');
-    }
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    // console.log(payload);
+    if (typeof payload === 'string')
+      throw new BadRequestError('invalid jwt token');
     req.user = { userId: payload.userId };
     next();
   } catch (error) {

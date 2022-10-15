@@ -6,8 +6,6 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
-  LOGIN_USER_BEGIN,
-  LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
@@ -72,6 +70,14 @@ const AppContext = React.createContext<AppContextInterface | undefined>(
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // axios
+  const authFetch = axios.create({
+    baseURL: '/api/v1',
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
+  });
 
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -141,15 +147,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const updateUser = async (currentUser: IUser) => {
     try {
-      const { data } = await axios.patch(
-        '/api/v1/auth/updateUser',
-        currentUser,
-        {
-          headers: {
-            Authorization: `Bearer ${state.token}`,
-          },
-        }
-      );
+      const { data } = await authFetch.patch('/auth/updateUser', currentUser);
       console.log(data);
     } catch (error) {
       console.error(error);
