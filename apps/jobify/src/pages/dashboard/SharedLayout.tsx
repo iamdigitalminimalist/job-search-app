@@ -12,7 +12,7 @@ export const SharedLayout = () => {
   return (
     <Wrapper>
       <main className="dashboard">
-        <BigSidebar />
+        <BigSidebar showSidebar={showSidebar} />
         <SmallSidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
         <div>
           <Navbar

@@ -4,7 +4,7 @@ import { MouseEventHandler } from 'react';
 
 /* eslint-disable-next-line */
 export interface NavLinksProps {
-  toggleSidebar:
+  toggleSidebar?:
     | MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>
     | undefined;
 }

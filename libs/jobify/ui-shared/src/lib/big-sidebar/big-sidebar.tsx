@@ -1,12 +1,30 @@
 import styled from 'styled-components';
+import { Logo } from '../logo/logo';
+import { NavLinks } from '../nav-links/nav-links';
+import { MouseEventHandler } from 'react';
 
 /* eslint-disable-next-line */
-export interface BigSidebarProps {}
+export interface BigSidebarProps {
+  showSidebar: boolean;
+}
 
 export const BigSidebar = (props: BigSidebarProps) => {
   return (
     <Wrapper>
-      <h4>Big Sidebar</h4>
+      <div
+        className={
+          props.showSidebar
+            ? 'sidebar-container show-sidebar'
+            : 'sidebar-container'
+        }
+      >
+        <div className="content">
+          <header>
+            <Logo />
+          </header>
+          <NavLinks />
+        </div>
+      </div>
     </Wrapper>
   );
 };
