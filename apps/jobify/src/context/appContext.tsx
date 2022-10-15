@@ -10,7 +10,7 @@ import {
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
 } from './actions';
-import axios from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export interface IUser {
   name: string;
@@ -78,6 +78,36 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       Authorization: `Bearer ${state.token}`,
     },
   });
+
+  // request
+  authFetch.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      if (!config?.headers) {
+        throw new Error(
+          `Expected 'config' and 'config.headers' not to be undefined`
+        );
+      }
+      config.headers['Authorization'] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error: AxiosError) => {
+      return Promise.reject(error);
+    }
+  );
+
+  // response
+  authFetch.interceptors.response.use(
+    (response: AxiosResponse) => {
+      return response;
+    },
+    (error: AxiosError) => {
+      console.log(error.response);
+      if (error.response?.status === 401) {
+        console.error('AUTH ERROR');
+      }
+      return Promise.reject(error);
+    }
+  );
 
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });

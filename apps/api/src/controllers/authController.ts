@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import User from '../model/User';
 import { BadRequestError, UnauthenticatedError } from '../errors';
 
-export const register = async (req: Request, res: Response) => {
+const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     throw new BadRequestError('Please provide all values');
@@ -28,7 +28,7 @@ export const register = async (req: Request, res: Response) => {
   });
 };
 
-export const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   if (!email || !password) {
     throw new BadRequestError('Please provide all values');
@@ -47,19 +47,22 @@ export const login = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+const updateUser = async (req: Request, res: Response) => {
   const { email, name, lastName, location } = req.body;
   if (!email || !name || !lastName || !location) {
     throw new BadRequestError('Please provide all values');
   }
-
   const user = await User.findOne({ _id: req.user.userId });
+
   user.email = email;
   user.name = name;
   user.lastName = lastName;
   user.location = location;
+
   await user.save();
 
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
+
+export { register, login, updateUser };
