@@ -1,9 +1,13 @@
 import { Response, Request } from 'express';
 import Job from '../model/Job';
 import { StatusCodes } from 'http-status-codes';
-import { BadRequestError, UnAuthenticatedError } from '../errors';
+import { BadRequestError } from '../errors';
+import { IGetUserAuthInfoRequest } from '@job-search-app/api-interfaces';
 
-export const createJob = async (req: Request, res: Response) => {
+export const createJob = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+) => {
   const { position, company } = req.body;
   if (!position || !company) {
     throw new BadRequestError('Please provide all values');

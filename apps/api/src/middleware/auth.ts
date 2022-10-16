@@ -1,8 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { IGetUserAuthInfoRequest } from '@job-search-app/api-interfaces';
 import { BadRequestError, UnAuthenticatedError } from '../errors';
 import * as jwt from 'jsonwebtoken';
 
-const auth = async (req: Request, res: Response, next: NextFunction) => {
+const auth = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response,
+  next: NextFunction
+) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer')) {
     throw new UnAuthenticatedError('Authentication Invalid');

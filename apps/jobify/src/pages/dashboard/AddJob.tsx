@@ -12,6 +12,8 @@ export const AddJob = () => {
     isLoading,
     isEditing,
     showAlert,
+    alertType,
+    alertText,
     displayAlert,
     position,
     company,
@@ -22,15 +24,14 @@ export const AddJob = () => {
     jobStatusOptions,
     handleChange,
     clearValues,
+    createJob,
   } = useAppContext();
 
   const handleJobInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const name = e.target.name;
-    console.log(name);
     const value = e.target.value;
-    console.log(value);
     if (handleChange) {
       handleChange({ name, value });
     }
@@ -53,14 +54,23 @@ export const AddJob = () => {
       return;
     }
 
-    console.log('created job');
+    if (isEditing) {
+      // eventually editJob()
+      return;
+    }
+
+    if (createJob) {
+      createJob();
+    }
   };
 
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <h3>{isEditing ? 'edit job' : 'add job'}</h3>
-        {showAlert ? <Alert alertType="success" alertText="test" /> : null}
+        {showAlert ? (
+          <Alert alertType={alertType} alertText={alertText} />
+        ) : null}
         <div className="form-center">
           {/* Position */}
           <FormRow

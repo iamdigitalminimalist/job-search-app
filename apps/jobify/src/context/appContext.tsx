@@ -14,6 +14,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from './actions';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
@@ -215,6 +218,35 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
+  const createJob = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN });
+    try {
+      const { position, company, jobLocation, jobType, jobStatus } = state;
+      await authFetch.post('/jobs', {
+        company,
+        position,
+        jobLocation,
+        jobType,
+        jobStatus,
+      });
+      dispatch({ type: CREATE_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response !== undefined) {
+          if (error.response.status !== 401) return;
+          dispatch({
+            type: CREATE_JOB_ERROR,
+            payload: { msg: error.response.data.msg },
+          });
+        }
+      } else {
+        console.error(error);
+      }
+    }
+    clearAlert();
+  };
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -236,6 +268,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         updateUser,
         handleChange,
         clearValues,
+        createJob,
       }}
     >
       {children}

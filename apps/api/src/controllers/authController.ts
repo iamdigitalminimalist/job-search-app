@@ -2,6 +2,7 @@ import { Response, Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import User from '../model/User';
 import { BadRequestError, UnAuthenticatedError } from '../errors';
+import { IGetUserAuthInfoRequest } from '@job-search-app/api-interfaces';
 
 const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -47,7 +48,7 @@ const login = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
-const updateUser = async (req: Request, res: Response) => {
+const updateUser = async (req: IGetUserAuthInfoRequest, res: Response) => {
   const { email, name, lastName, location } = req.body;
   if (!email || !name || !lastName || !location) {
     throw new BadRequestError('Please provide all values');
