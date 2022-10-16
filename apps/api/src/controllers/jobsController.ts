@@ -14,12 +14,17 @@ export const createJob = async (
   }
   req.body.createdBy = req.user.userId;
   const job = await Job.create(req.body);
-
   res.status(StatusCodes.CREATED).json({ job });
 };
 
-export const getAllJobs = async (req: Request, res: Response) => {
-  res.send('get all jobs');
+export const getAllJobs = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+) => {
+  const jobs = await Job.find({ createdBy: req.user.userId });
+  res
+    .status(StatusCodes.OK)
+    .json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
 };
 
 export const updateJob = async (req: Request, res: Response) => {
