@@ -1,16 +1,68 @@
 import styled from 'styled-components';
+import { LoadingSpinner } from '../loading-spinner/loading-spinner';
+import { IJob } from '@job-search-app/jobify-interfaces';
+import { useEffect } from 'react';
+import { JobItem } from '../job-item/job-item';
 
-/* eslint-disable-next-line */
-export interface JobsContainerProps {}
-
-const StyledJobsContainer = styled.div`
-  color: pink;
-`;
+export interface JobsContainerProps {
+  jobs: IJob[];
+  getJobs: (() => void) | undefined;
+  isLoading: boolean;
+  page: number;
+  totalJobs: number;
+}
 
 export const JobsContainer = (props: JobsContainerProps) => {
+  useEffect(() => {
+    if (props.getJobs) {
+      props.getJobs();
+    }
+  }, []);
+
+  if (props.isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (props.jobs.length === 0) {
+    return (
+      <Wrapper>
+        <h2>No jobs to display...</h2>
+      </Wrapper>
+    );
+  }
+
   return (
-    <StyledJobsContainer>
-      <h1>Welcome to JobsContainer!</h1>
-    </StyledJobsContainer>
+    <Wrapper>
+      <h5>
+        {props.totalJobs} {props.jobs.length > 1 ? 'jobs' : 'job'} found
+      </h5>
+      <div className="jobs">
+        {props.jobs.map((job) => (
+          <JobItem key={job._id} {...job} />
+        ))}
+      </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.section`
+  margin-top: 4rem;
+  h2 {
+    text-transform: none;
+  }
+  & > h5 {
+    font-weight: 700;
+  }
+  .jobs {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+  @media (min-width: 992px) {
+    .jobs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+`;

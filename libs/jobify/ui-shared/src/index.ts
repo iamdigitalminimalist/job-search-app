@@ -1,3 +1,5 @@
+export * from './lib/job-item/job-item';
+export * from './lib/loading-spinner/loading-spinner';
 export * from './lib/jobs-container/jobs-container';
 export * from './lib/search-container/search-container';
 export * from './lib/form-row-select/form-row-select';

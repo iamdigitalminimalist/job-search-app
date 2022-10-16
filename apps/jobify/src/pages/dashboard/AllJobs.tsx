@@ -6,7 +6,7 @@ import {
 } from '@job-search-app/jobify/ui-shared';
 
 export const AllJobs = () => {
-  const { getJobs } = useAppContext();
+  const { getJobs, jobs, isLoading, page, totalJobs } = useAppContext();
   useEffect(() => {
     if (getJobs) {
       getJobs();
@@ -15,7 +15,13 @@ export const AllJobs = () => {
   return (
     <>
       <SearchContainer />
-      <JobsContainer />
+      <JobsContainer
+        jobs={jobs}
+        getJobs={getJobs}
+        isLoading={isLoading}
+        page={page}
+        totalJobs={totalJobs}
+      />
     </>
   );
 };

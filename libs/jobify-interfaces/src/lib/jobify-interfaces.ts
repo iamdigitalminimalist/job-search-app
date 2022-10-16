@@ -1,6 +1,14 @@
 import { MouseEventHandler } from 'react';
 
-export interface IUser {
+export interface IMongoose {
+  _id: string;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IUser extends IMongoose {
   name: string;
   password: string;
   email: string;
@@ -8,7 +16,7 @@ export interface IUser {
   lastName?: string;
 }
 
-export interface IJob {
+export interface IJob extends IMongoose {
   company: string;
   position: string;
   jobLocation: string;
