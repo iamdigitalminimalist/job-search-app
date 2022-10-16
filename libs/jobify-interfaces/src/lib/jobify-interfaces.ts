@@ -53,6 +53,10 @@ export interface AppContextInterface {
   jobType: string;
   jobStatusOptions: JobStatusOptions[];
   jobStatus: string;
+  jobs: IJob[];
+  totalJobs: number;
+  numOfPages: number;
+  page: number;
   displayAlert?: () => void;
   registerUser?: (currentUser: {
     password: string;

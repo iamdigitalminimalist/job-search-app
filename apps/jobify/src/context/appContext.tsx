@@ -33,6 +33,7 @@ const userLocation = localStorage.getItem('location');
 
 const initialState: AppContextInterface = {
   isLoading: false,
+  showSidebar: false,
   showAlert: false,
   alertText: '',
   alertType: '',
@@ -57,7 +58,10 @@ const initialState: AppContextInterface = {
     JobStatusOptions.PENDING,
   ],
   jobStatus: JobStatusOptions.PENDING,
-  showSidebar: false,
+  jobs: [],
+  totalJobs: 0,
+  numOfPages: 1,
+  page: 1,
 };
 
 const AppContext = React.createContext<AppContextInterface | undefined>(
