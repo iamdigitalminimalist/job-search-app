@@ -75,4 +75,5 @@ export interface AppContextInterface {
   handleChange?: ({ name, value }: { name: string; value: string }) => void;
   clearValues?: () => void;
   createJob?: () => void;
+  getJobs?: () => void;
 }

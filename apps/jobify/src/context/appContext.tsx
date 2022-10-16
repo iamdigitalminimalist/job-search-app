@@ -1,4 +1,9 @@
-import React, { useReducer, useContext, MouseEventHandler } from 'react';
+import React, {
+  useReducer,
+  useContext,
+  MouseEventHandler,
+  useEffect,
+} from 'react';
 import { reducer } from './reducer';
 import {
   CLEAR_ALERT,
@@ -17,6 +22,8 @@ import {
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
+  GET_JOBS_BEGIN,
+  GET_JOBS_SUCCESS,
 } from './actions';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
@@ -251,6 +258,32 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     clearAlert();
   };
 
+  const getJobs = async () => {
+    const url = `/jobs`;
+
+    dispatch({ type: GET_JOBS_BEGIN });
+    try {
+      const { data } = await authFetch(url);
+      const { jobs, totalJobs, numOfPages } = data;
+      dispatch({
+        type: GET_JOBS_SUCCESS,
+        payload: {
+          jobs,
+          totalJobs,
+          numOfPages,
+        },
+      });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response !== undefined) {
+          console.error(error.response);
+          logoutUser();
+        }
+      }
+    }
+    clearAlert();
+  };
+
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
@@ -273,6 +306,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         handleChange,
         clearValues,
         createJob,
+        getJobs,
       }}
     >
       {children}
