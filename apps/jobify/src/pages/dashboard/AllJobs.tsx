@@ -1,5 +1,9 @@
 import { useAppContext } from '../../context/appContext';
 import { useEffect } from 'react';
+import {
+  SearchContainer,
+  JobsContainer,
+} from '@job-search-app/jobify/ui-shared';
 
 export const AllJobs = () => {
   const { getJobs } = useAppContext();
@@ -8,5 +12,10 @@ export const AllJobs = () => {
       getJobs();
     }
   }, []);
-  return <h1>All Jobs Page</h1>;
+  return (
+    <>
+      <SearchContainer />
+      <JobsContainer />
+    </>
+  );
 };
