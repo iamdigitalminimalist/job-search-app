@@ -12,8 +12,14 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from './actions';
 import { initialState } from './appContext';
+import {
+  JobStatusOptions,
+  JobTypeOptions,
+} from '@job-search-app/jobify-interfaces';
 
 export const reducer = (state: any, action: any) => {
   if (action.type === DISPLAY_ALERT) {
@@ -130,6 +136,24 @@ export const reducer = (state: any, action: any) => {
       alertType: 'danger',
       alertText: action.payload.msg,
     };
+  }
+  if (action.type === HANDLE_CHANGE) {
+    return {
+      ...state,
+      [action.payload.name]: action.payload.value,
+    };
+  }
+  if (action.type === CLEAR_VALUES) {
+    const initialState = {
+      isEditing: false,
+      editJobId: '',
+      position: '',
+      company: '',
+      jobLocation: state.userLocation,
+      jobType: JobTypeOptions.FULL_TIME,
+      jobStatus: JobStatusOptions.PENDING,
+    };
+    return { ...state, ...initialState };
   }
   throw new Error(`no such action : ${action.type}`);
 };

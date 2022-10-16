@@ -1,3 +1,4 @@
+import React from 'react';
 import Wrapper from '../../styles/DashboardFormPage';
 import {
   FormRow,
@@ -5,10 +6,10 @@ import {
   FormRowSelect,
 } from '@job-search-app/jobify/ui-shared';
 import { useAppContext } from '../../context/appContext';
-import React, { useState } from 'react';
 
 export const AddJob = () => {
   const {
+    isLoading,
     isEditing,
     showAlert,
     displayAlert,
@@ -19,31 +20,27 @@ export const AddJob = () => {
     jobTypeOptions,
     jobStatus,
     jobStatusOptions,
+    handleChange,
+    clearValues,
   } = useAppContext();
-  const [jobPositionField, setJobPositionField] = useState<string>(position);
-  const [jobCompanyField, setJobCompanyField] = useState<string>(company);
-  const [jobLocationField, setJobLocationField] = useState<string>(jobLocation);
-  const [jobTypeField, setJobTypeField] = useState<string>(jobType);
-  const [jobStatusField, setJobStatusField] = useState<string>(jobStatus);
 
-  const handlePositionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJobPositionField(e.target.value);
+  const handleJobInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const name = e.target.name;
+    console.log(name);
+    const value = e.target.value;
+    console.log(value);
+    if (handleChange) {
+      handleChange({ name, value });
+    }
   };
 
-  const handleCompanyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJobCompanyField(e.target.value);
-  };
-
-  const handleJobLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJobLocationField(e.target.value);
-  };
-
-  const handleJobTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setJobTypeField(e.target.value);
-  };
-
-  const handleJobStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setJobStatusField(e.target.value);
+  const handleRest = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (clearValues) {
+      clearValues();
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,6 +52,7 @@ export const AddJob = () => {
       }
       return;
     }
+
     console.log('created job');
   };
 
@@ -68,43 +66,55 @@ export const AddJob = () => {
           <FormRow
             type="text"
             name="position"
-            value={jobPositionField}
-            handleChange={handlePositionChange}
+            value={position}
+            handleChange={handleJobInput}
           />
           {/* Company */}
           <FormRow
             type="text"
             name="company"
-            value={jobCompanyField}
-            handleChange={handleCompanyChange}
+            value={company}
+            handleChange={handleJobInput}
           />
           {/* Job Location */}
           <FormRow
             type="text"
             labelText="job location"
             name="jobLocation"
-            value={jobLocationField}
-            handleChange={handleJobLocationChange}
+            value={jobLocation}
+            handleChange={handleJobInput}
           />
           {/* Job Type */}
           <FormRowSelect
             name="jobType"
             labelText="job type"
-            value={jobTypeField}
-            handleChange={handleJobTypeChange}
+            value={jobType}
+            handleChange={handleJobInput}
             list={jobTypeOptions}
           />
           {/* Job Status */}
           <FormRowSelect
-            name="status"
-            value={jobStatusField}
-            handleChange={handleJobStatusChange}
+            name="jobStatus"
+            labelText="status"
+            value={jobStatus}
+            handleChange={handleJobInput}
             list={jobStatusOptions}
           />
           {/* Submit Button */}
           <div className="btn-container">
-            <button type="submit" className="btn btn-block submit-btn">
+            <button
+              type="submit"
+              className="btn btn-block submit-btn"
+              disabled={isLoading}
+            >
               submit
+            </button>
+            <button
+              className="btn btn-block clear-btn"
+              type="button"
+              onClick={handleRest}
+            >
+              clear
             </button>
           </div>
         </div>

@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@job-search-app/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@job-search-app/jobify-interfaces": [
+        "libs/jobify-interfaces/src/index.ts"
+      ],
       "@job-search-app/jobify/ui-shared": ["libs/jobify/ui-shared/src/index.ts"]
     }
   },
