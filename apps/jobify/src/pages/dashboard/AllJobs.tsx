@@ -7,11 +7,6 @@ import {
 
 export const AllJobs = () => {
   const { getJobs, jobs, isLoading, page, totalJobs } = useAppContext();
-  useEffect(() => {
-    if (getJobs) {
-      getJobs();
-    }
-  }, []);
   return (
     <>
       <SearchContainer />
