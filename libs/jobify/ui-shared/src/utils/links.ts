@@ -14,7 +14,7 @@ export const links: LinkProps[] = [
   {
     id: 1,
     text: 'stats',
-    path: '/',
+    path: '',
     icon: FaChartLine,
   },
   {

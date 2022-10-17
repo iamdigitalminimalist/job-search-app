@@ -127,8 +127,8 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const addUserToLocalStorage = (props: ILocalStorage) => {
     localStorage.setItem('user', JSON.stringify(props.user));
-    localStorage.setItem('token', JSON.stringify(props.token));
-    localStorage.setItem('location', JSON.stringify(props.location));
+    localStorage.setItem('token', props.token);
+    localStorage.setItem('location', props.location);
   };
 
   const removeUserFromLocalStorage = () => {
