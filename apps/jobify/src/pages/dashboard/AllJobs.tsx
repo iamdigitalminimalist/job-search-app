@@ -1,5 +1,4 @@
 import { useAppContext } from '../../context/appContext';
-import { useEffect } from 'react';
 import {
   SearchContainer,
   JobsContainer,

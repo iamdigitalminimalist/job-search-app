@@ -3,7 +3,6 @@ import { format } from 'date-fns';
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { JobInfo } from '../job-info/job-info';
-import { JobStatusOptions } from '@job-search-app/jobify-interfaces';
 
 export interface JobItemProps {
   _id: string;

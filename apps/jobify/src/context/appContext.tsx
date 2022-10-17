@@ -1,9 +1,4 @@
-import React, {
-  useReducer,
-  useContext,
-  MouseEventHandler,
-  useEffect,
-} from 'react';
+import React, { useReducer, useContext } from 'react';
 import { reducer } from './reducer';
 import {
   CLEAR_ALERT,
@@ -24,6 +19,7 @@ import {
   CREATE_JOB_ERROR,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
+  SET_EDIT_JOB,
 } from './actions';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
@@ -294,7 +290,11 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   const setEditJob = (id: string) => {
-    console.log(`set edit job: ${id}`);
+    dispatch({ type: SET_EDIT_JOB, payload: { id } });
+  };
+
+  const editJob = () => {
+    console.log('edit job');
   };
 
   const deleteJob = (id: string) => {
@@ -317,6 +317,7 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         getJobs,
         setEditJob,
         deleteJob,
+        editJob,
       }}
     >
       {children}

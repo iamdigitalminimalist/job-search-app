@@ -85,5 +85,6 @@ export interface AppContextInterface {
   createJob?: () => void;
   getJobs?: () => void;
   setEditJob?: (id: string) => void;
+  editJob?: () => void;
   deleteJob?: (id: string) => void;
 }
