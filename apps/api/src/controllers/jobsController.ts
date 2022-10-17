@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import Job from '../model/Job';
 import { StatusCodes } from 'http-status-codes';
-import { BadRequestError } from '../errors';
+import { BadRequestError, NotFoundError } from '../errors';
 import { IGetUserAuthInfoRequest } from '@job-search-app/api-interfaces';
 
 export const createJob = async (
@@ -28,7 +28,27 @@ export const getAllJobs = async (
 };
 
 export const updateJob = async (req: Request, res: Response) => {
-  res.send('updateJob');
+  const { id: jobId } = req.params;
+  const { company, position } = req.body;
+
+  if (!company || !position) {
+    throw new BadRequestError('Please Provide All Values');
+  }
+
+  const job = await Job.findOne({ _id: jobId });
+
+  if (!job) {
+    throw new NotFoundError(`No job with id ${jobId}`);
+  }
+
+  // check permissions
+
+  const updatedJob = await Job.findOneAndUpdate({ _id: jobId }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.send(StatusCodes.OK).json({ updatedJob });
 };
 
 export const deleteJob = async (req: Request, res: Response) => {
