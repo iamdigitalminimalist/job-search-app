@@ -10,6 +10,8 @@ export interface JobsContainerProps {
   isLoading: boolean;
   page: number;
   totalJobs: number;
+  setEditJob: ((id: string) => void) | undefined;
+  deleteJob: ((id: string) => void) | undefined;
 }
 
 export const JobsContainer = (props: JobsContainerProps) => {
@@ -38,7 +40,12 @@ export const JobsContainer = (props: JobsContainerProps) => {
       </h5>
       <div className="jobs">
         {props.jobs.map((job) => (
-          <JobItem key={job._id} {...job} />
+          <JobItem
+            key={job._id}
+            setEditJob={props.setEditJob}
+            deleteJob={props.deleteJob}
+            {...job}
+          />
         ))}
       </div>
     </Wrapper>

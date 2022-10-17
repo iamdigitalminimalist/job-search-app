@@ -141,6 +141,15 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     localStorage.removeItem('location');
   };
 
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
+
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
+  };
+
   const registerUser = async (currentUser: IUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
@@ -277,20 +286,19 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       if (axios.isAxiosError(error)) {
         if (error.response !== undefined) {
           console.error(error.response);
-          logoutUser();
+          // logoutUser();
         }
       }
     }
     clearAlert();
   };
 
-  const toggleSidebar = () => {
-    dispatch({ type: TOGGLE_SIDEBAR });
+  const setEditJob = (id: string) => {
+    console.log(`set edit job: ${id}`);
   };
 
-  const logoutUser = () => {
-    dispatch({ type: LOGOUT_USER });
-    removeUserFromLocalStorage();
+  const deleteJob = (id: string) => {
+    console.log(`delete job: ${id}`);
   };
 
   return (
@@ -307,6 +315,8 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         clearValues,
         createJob,
         getJobs,
+        setEditJob,
+        deleteJob,
       }}
     >
       {children}

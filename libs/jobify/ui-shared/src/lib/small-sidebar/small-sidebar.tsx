@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FaTimes } from 'react-icons/all';
+import { FaTimes } from 'react-icons/fa';
 import { Logo } from '../logo/logo';
 import { MouseEventHandler } from 'react';
 import { NavLinks } from '../nav-links/nav-links';

@@ -6,7 +6,8 @@ import {
 } from '@job-search-app/jobify/ui-shared';
 
 export const AllJobs = () => {
-  const { getJobs, jobs, isLoading, page, totalJobs } = useAppContext();
+  const { getJobs, jobs, isLoading, page, totalJobs, setEditJob, deleteJob } =
+    useAppContext();
   return (
     <>
       <SearchContainer />
@@ -16,6 +17,8 @@ export const AllJobs = () => {
         isLoading={isLoading}
         page={page}
         totalJobs={totalJobs}
+        setEditJob={setEditJob}
+        deleteJob={deleteJob}
       />
     </>
   );
