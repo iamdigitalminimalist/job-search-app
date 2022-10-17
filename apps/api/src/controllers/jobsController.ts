@@ -3,6 +3,7 @@ import Job from '../model/Job';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors';
 import { IGetUserAuthInfoRequest } from '@job-search-app/api-interfaces';
+import { checkPermissions } from '../utils/checkPermissions';
 
 export const createJob = async (
   req: IGetUserAuthInfoRequest,
@@ -27,7 +28,10 @@ export const getAllJobs = async (
     .json({ jobs, totalJobs: jobs.length, numOfPages: 1 });
 };
 
-export const updateJob = async (req: Request, res: Response) => {
+export const updateJob = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+) => {
   const { id: jobId } = req.params;
   const { company, position } = req.body;
 
@@ -42,6 +46,8 @@ export const updateJob = async (req: Request, res: Response) => {
   }
 
   // check permissions
+
+  checkPermissions(req.user, job.createdBy);
 
   const updatedJob = await Job.findOneAndUpdate({ _id: jobId }, req.body, {
     new: true,
