@@ -45,8 +45,6 @@ export const updateJob = async (
     throw new NotFoundError(`No job with id ${jobId}`);
   }
 
-  // check permissions
-
   checkPermissions(req.user, job.createdBy);
 
   const updatedJob = await Job.findOneAndUpdate({ _id: jobId }, req.body, {
@@ -57,8 +55,22 @@ export const updateJob = async (
   res.send(StatusCodes.OK).json({ updatedJob });
 };
 
-export const deleteJob = async (req: Request, res: Response) => {
-  res.send('deleteJob');
+export const deleteJob = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+) => {
+  const { id: jobId } = req.params;
+  const job = await Job.findOne({ _id: jobId });
+
+  if (!job) {
+    throw new NotFoundError(`No job with id ${jobId}`);
+  }
+
+  checkPermissions(req.user, job.createdBy);
+
+  await job.remove();
+
+  res.send(StatusCodes.OK).json({ msg: 'Success! Job removed' });
 };
 
 export const showStats = async (req: Request, res: Response) => {
