@@ -1,3 +1,4 @@
+export * from './lib/job-info/job-info';
 export * from './lib/job-item/job-item';
 export * from './lib/loading-spinner/loading-spinner';
 export * from './lib/jobs-container/jobs-container';

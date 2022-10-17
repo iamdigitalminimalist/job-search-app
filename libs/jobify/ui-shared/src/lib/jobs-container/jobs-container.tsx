@@ -10,6 +10,8 @@ export interface JobsContainerProps {
   isLoading: boolean;
   page: number;
   totalJobs: number;
+  jobLocation: string;
+  jobStatus: string;
   setEditJob: ((id: string) => void) | undefined;
   deleteJob: ((id: string) => void) | undefined;
 }

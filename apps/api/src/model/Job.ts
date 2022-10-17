@@ -4,7 +4,7 @@ import { IUser } from './User';
 export interface IJob extends Document {
   company: string;
   position: string;
-  status: string;
+  jobStatus: string;
   jobType: string;
   jobLocation: string;
   createdBy: IUser;
@@ -22,7 +22,7 @@ const JobSchema = new mongoose.Schema<IJob>(
       required: [true, 'Please provide position'],
       maxLength: 20,
     },
-    status: {
+    jobStatus: {
       type: String,
       enum: ['interview', 'declined', 'pending'],
       default: 'pending',

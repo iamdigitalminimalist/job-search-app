@@ -2,12 +2,17 @@ import styled from 'styled-components';
 import { format } from 'date-fns';
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { JobInfo } from '../job-info/job-info';
+import { JobStatusOptions } from '@job-search-app/jobify-interfaces';
 
 export interface JobItemProps {
   _id: string;
   company: string;
   position: string;
   createdAt: string;
+  jobLocation: string;
+  jobStatus: string;
+  jobType: string;
   setEditJob: ((id: string) => void) | undefined;
   deleteJob: ((id: string) => void) | undefined;
 }
@@ -24,7 +29,12 @@ export const JobItem = (props: JobItemProps) => {
         </div>
       </header>
       <div className="content">
-        {/* Content Center Later */}
+        <div className="content-center">
+          <JobInfo icon={() => <FaLocationArrow />} text={props.jobLocation} />
+          <JobInfo icon={() => <FaCalendarAlt />} text={date} />
+          <JobInfo icon={() => <FaBriefcase />} text={props.jobType} />
+          <div className={`status ${props.jobStatus}`}>{props.jobStatus}</div>
+        </div>
         <footer>
           <div className="actions">
             <Link
