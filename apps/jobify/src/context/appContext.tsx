@@ -21,6 +21,9 @@ import {
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
   DELETE_JOB_BEGIN,
+  EDIT_JOB_BEGIN,
+  EDIT_JOB_SUCCESS,
+  EDIT_JOB_ERROR,
 } from './actions';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import {
@@ -294,8 +297,33 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     dispatch({ type: SET_EDIT_JOB, payload: { id } });
   };
 
-  const editJob = () => {
-    console.log('edit job');
+  const editJob = async () => {
+    dispatch({ type: EDIT_JOB_BEGIN });
+    try {
+      const { position, company, jobLocation, jobType, jobStatus } = state;
+      await authFetch.patch(`/jobs/${state.editJobId}`, {
+        company,
+        position,
+        jobLocation,
+        jobType,
+        jobStatus,
+      });
+      dispatch({ type: EDIT_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response !== undefined) {
+          if (error.response.status !== 401) return;
+          dispatch({
+            type: EDIT_JOB_ERROR,
+            payload: { msg: error.response.data.msg },
+          });
+        }
+      } else {
+        console.error(error);
+      }
+    }
+    clearAlert();
   };
 
   const deleteJob = async (jobId: string) => {
