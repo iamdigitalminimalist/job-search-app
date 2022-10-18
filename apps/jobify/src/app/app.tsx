@@ -21,8 +21,9 @@ export const App = () => {
               <SharedLayout />
             </ProtectedRoute>
           }
+          errorElement={<PageNotFound />}
         >
-          <Route index element={<Stats />} />
+          <Route path="stats" element={<Stats />} />
           <Route path="add-job" element={<AddJob />} />
           <Route path="all-jobs" element={<AllJobs />} />
           <Route path="profile" element={<Profile />} />
